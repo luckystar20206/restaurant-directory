@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Faker\Factory as FakerFactory;
+
 class RestaurantController extends Controller
 {
     /**
@@ -13,9 +15,23 @@ class RestaurantController extends Controller
      */
     public function index()
     {
+		$faker = FakerFactory::create();
+		
 		$json = json_decode(\File::get(database_path('data/restaurants.json')), true);
 		
         $collection = collect($json['restaurants']);
+		
+		$collection = $collection->map(function($collection) use ($faker){
+			$collection['address']							= $faker->address;
+			
+			$collection['telephone']						= $faker->e164PhoneNumber;
+			
+			$collection['url']								= $faker->domainName;
+			
+			$collection['sortingValues']['topRestaurants']	= ($collection['sortingValues']['distance'] * $collection['sortingValues']['popularity']) + $collection['sortingValues']['ratingAverage'];
+			
+			return $collection;
+		});
 		
 		return $collection->all();
     }

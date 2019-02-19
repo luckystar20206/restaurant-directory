@@ -198,7 +198,7 @@ p {
 
 // slider
 .slider {
-    background: url(../images/slider.jpg) no-repeat;
+    background: url('/images/slider.jpg') no-repeat;
     background-size: cover;
     min-height: 800px;
     @media (max-width: 992px) {

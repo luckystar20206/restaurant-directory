@@ -1,0 +1,141 @@
+@font-face {
+  font-weight: normal;
+  font-style: normal;
+  font-family: 'feathericons';
+  src: url('/fonts/feathericons/feathericons.eot?-8is7zf');
+  src: url('/fonts/feathericons/feathericons.eot?#iefix-8is7zf') format("embedded-opentype"), url('/fonts/feathericons/feathericons.woff?-8is7zf') format("woff"), url('/fonts/feathericons/feathericons.ttf?-8is7zf') format("truetype"), url('/fonts/feathericons/feathericons.svg?-8is7zf#feathericons') format("svg");
+}
+
+
+.grid {
+  position: relative;
+  margin: 0 auto;
+  padding: 1em 0 4em;
+  max-width: 1000px;
+  list-style: none;
+  text-align: center;
+  figure {
+    position: relative;
+    float: left;
+    overflow: hidden;
+    margin: 0;
+    width: 100%;
+    background: #3085a3;
+    text-align: center;
+    cursor: pointer;
+    img {
+      position: relative;
+      display: block;
+      min-height: 100%;
+      width: 100%;
+      opacity: 0.8;
+    }
+    figcaption {
+      padding: 2em;
+      color: #fff;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      h5 {
+        font-weight: 400;
+        text-align: left;
+      }
+      &::before, &::after {
+        pointer-events: none;
+      }
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      > a {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
+        text-indent: 200%;
+        white-space: nowrap;
+        font-size: 0;
+        opacity: 0;
+      }
+    }
+    h5 {
+      word-spacing: -0.15em;
+      font-weight: 300;
+      span {
+        font-weight: 800;
+      }
+      margin: 0;
+    }
+    p {
+      margin: 0;
+      letter-spacing: 1px;
+      font-weight: 300;
+      text-align: left;
+      margin: 6px 0 0;
+    }
+  }
+}
+
+/* Common style */
+
+@media (max-width: 992px) {
+  .grid figure figcaption {
+    padding: 0.7em;
+  }
+}
+
+@media (max-width: 992px) {
+  .grid figure figcaption h5 {
+    font-size: 22px;
+  }
+}
+
+/* Anchor will cover the whole item by default */
+/* For some effects it will show as a button */
+
+/* Individual effects */
+
+/*---------------*/
+/***** Ruby *****/
+/*---------------*/
+
+figure.effect-ruby {
+  background-color: #000;
+  img {
+    -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+    transition: opacity 0.35s, transform 0.35s;
+    -webkit-transform: scale(1.15);
+    transform: scale(1.15);
+  }
+  &:hover img {
+    opacity: 0.5;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  h2 {
+    margin-top: 20%;
+    -webkit-transition: -webkit-transform 0.35s;
+    transition: transform 0.35s;
+    -webkit-transform: translate3d(0, 20px, 0);
+    transform: translate3d(0, 20px, 0);
+  }
+  &:hover h2 {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/*figure.effect-ruby p {
+	margin: 1em 0 0;
+	padding: 3em;
+	border: 1px solid #fff;
+	opacity: 0;
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+	-webkit-transform: translate3d(0,20px,0) scale(1.1);
+	transform: translate3d(0,20px,0) scale(1.1);
+	} */
+
+/*figure.effect-ruby:hover p {
+	opacity: 1;
+	-webkit-transform: translate3d(0,0,0) scale(1);
+	transform: translate3d(0,0,0) scale(1);
+}*/

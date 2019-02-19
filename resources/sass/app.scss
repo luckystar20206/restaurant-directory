@@ -1,14 +1,18 @@
+// Bootstrap
+@import "~bootstrap/scss/bootstrap";
 
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900');
 
-// Variables
-@import 'variables';
+// Simple line Icon
+$simple-line-font-path: "~simple-line-icons/fonts/";
+@import "~simple-line-icons/scss/simple-line-icons";
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+// Themify Icon
+@import "themify-icons";
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-}
+// Hover Effects
+@import "set1";
+
+// Main CSS
+@import "style";

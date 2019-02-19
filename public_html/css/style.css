@@ -6,6 +6,9 @@ Author: Surjith S M
 /* ==============================================================
    GLOBAL STYLES
    ============================================================== */
+html {
+  scroll-behavior: smooth; }   
+   
 body {
   font-family: 'Roboto', sans-serif; }
 
@@ -397,7 +400,7 @@ p {
     line-height: 1;
     padding: 0 0 0 12px; }
 
-.closed-now {
+.closed-now, .order-ahead {
   color: #ff3a6d;
   font-size: 13px;
   display: block;

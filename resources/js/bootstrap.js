@@ -8,10 +8,19 @@ window._ = require('lodash');
  */
 
 try {
-    window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
-
+	
+	window.Popper = require('popper.js').default;
+    
     require('bootstrap');
+	
+	$(window).scroll(function(){
+		if ($(window).scrollTop() > 100)
+			$('.fixed').addClass('is-sticky');
+
+		else
+			$('.fixed').removeClass('is-sticky');
+	});
 } catch (e) {}
 
 /**

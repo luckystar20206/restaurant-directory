@@ -25,7 +25,6 @@
         "vue-template-compiler": "^2.6.6"
     },
     "dependencies": {
-        "moment": "^2.24.0",
         "simple-line-icons": "^2.4.1",
         "vue-cookies": "^1.5.12",
         "vue-toastr": "^2.0.16"

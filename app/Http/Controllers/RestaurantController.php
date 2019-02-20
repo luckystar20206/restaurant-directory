@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Faker\Factory as FakerFactory;
-
 use Cookie;
 
 class RestaurantController extends Controller
 {
+	public $restaurants = [];
+	
+	public function __construct(){
+		$this->restaurants = json_decode(\File::get(database_path('data/restaurants.json')), true)['restaurants'];
+	}
+	
     /**
      * Custom comparer for Laravel Collection objects that enables sorting collections by multiple criteria.
 	 * Credit: https://stackoverflow.com/a/33304416/2560062
@@ -45,21 +49,17 @@ class RestaurantController extends Controller
 		if(is_null(Cookie::get('favoritedRestaurants')))
 			setcookie('favoritedRestaurants', '');
 		
-		$faker = FakerFactory::create();
-		
-		$json = json_decode(\File::get(database_path('data/restaurants.json')), true);
-		
-        $collection = collect($json['restaurants']);
+        $collection = collect($this->restaurants);
 		
 		$favoritedRestaurants = explode(";", Cookie::get('favoritedRestaurants'));
 		
-		$collection = $collection->map(function($collection) use ($faker, $favoritedRestaurants){
-			$collection['sortingValues']['status']			= ($collection['status'] == 'open') ? 3 : (($collection['status'] == 'order ahead') ? 2 : 1);
+		$collection = $collection->map(function($collection) use ($favoritedRestaurants){
+			$collection['image']							= "images/featured".((strlen($collection['name']) % 4) + 1).".jpg"; // random images assigned
+
+			$collection['sortingValues']['status']			= ($collection['status'] == 'open') ? 3 : (($collection['status'] == 'order ahead') ? 2 : 1); // status numeralized
 			
-			$collection['sortingValues']['isFavorited']		= (in_array($collection['name'], $favoritedRestaurants)) ? 1 : 0;
-			
-			$collection['sortingValues']['dateFounded']		= $faker->dateTimeThisYear()->format('Y-m-d');
-						
+			$collection['sortingValues']['isFavorited']		= (in_array($collection['name'], $favoritedRestaurants)) ? 1 : 0; // favorite status
+									
 			$collection['sortingValues']['topRestaurants']	= ($collection['sortingValues']['distance'] * $collection['sortingValues']['popularity']) + $collection['sortingValues']['ratingAverage'];
 			
 			return $collection;
@@ -71,7 +71,7 @@ class RestaurantController extends Controller
 		
 		switch($sortby){
 			case 'newest':
-				$sort_criteria['dateFounded'] = 'desc';
+				$sort_criteria['newest'] = 'desc';
 				
 				break;
 			case 'rating_average':
@@ -98,6 +98,10 @@ class RestaurantController extends Controller
 				$sort_criteria['minCost'] = 'asc';
 				
 				break;
+			case 'top_restaurants':
+				$sort_criteria['topRestaurants'] = 'desc';
+				
+				break;
 		}
 		
 		$search = ($request->has('search')) ? $request->search : '';
@@ -118,6 +122,8 @@ class RestaurantController extends Controller
      */
     public function favorite(Request $request)
     {
+        $collection = collect($this->restaurants);
+				
 		try{
 			$validatedData = $request->validate([
 				'restaurant' => 'required|array'
@@ -125,16 +131,17 @@ class RestaurantController extends Controller
 			
 			$favoritedRestaurants = explode(";", Cookie::get('favoritedRestaurants'));
 			
-			if(!in_array($request->restaurant['name'], $favoritedRestaurants)){
-				$favoritedRestaurants[] = $request->restaurant['name'];
+			if(!isset($request->restaurant['name']) || is_null($collection->where('name', $request->restaurant['name'])))
+				return response()->json(['error' => "Faulty data!"], 403); 
 			
-				setcookie('favoritedRestaurants', join(";", $favoritedRestaurants));
-				
-				return response()->json(['success' => "Favorites saved!"], 200);
-			}
-			
-			else
+			if(in_array($request->restaurant['name'], $favoritedRestaurants))
 				return response()->json(['error' => "Already favourite!"], 403); 
+			
+			$favoritedRestaurants[] = $request->restaurant['name'];
+		
+			setcookie('favoritedRestaurants', join(";", $favoritedRestaurants));
+			
+			return response()->json(['success' => $request->restaurant['name']." added to your favorites!"], 200);
 		} catch(\Exception $e){
 			return response()->json(['error' => $e->getMessage()], 403); 
 		}
@@ -147,6 +154,8 @@ class RestaurantController extends Controller
      */
     public function unfavorite(Request $request)
     {
+        $collection = collect($this->restaurants);
+		
 		try{
 			$validatedData = $request->validate([
 				'restaurant' => 'required|array'
@@ -154,18 +163,19 @@ class RestaurantController extends Controller
 			
 			$favoritedRestaurants = explode(";", Cookie::get('favoritedRestaurants'));
 			
-			if(in_array($request->restaurant['name'], $favoritedRestaurants)){
-				$key = array_search($request->restaurant['name'], $favoritedRestaurants);
-				
-				unset($favoritedRestaurants[$key]);
+			if(!isset($request->restaurant['name']) || is_null($collection->where('name', $request->restaurant['name'])))
+				return response()->json(['error' => "Faulty data!"], 403); 
 			
-				setcookie('favoritedRestaurants', join(";", $favoritedRestaurants));
-				
-				return response()->json(['success' => "Favorites saved!"], 200);
-			}
-			
-			else
+			if(!in_array($request->restaurant['name'], $favoritedRestaurants))
 				return response()->json(['error' => "Not a favourite!"], 403); 
+			
+			$key = array_search($request->restaurant['name'], $favoritedRestaurants);
+			
+			unset($favoritedRestaurants[$key]);
+		
+			setcookie('favoritedRestaurants', join(";", $favoritedRestaurants));
+			
+			return response()->json(['success' => $request->restaurant['name']." removed from your favorites!"], 200);
 		} catch(\Exception $e){
 			return response()->json(['error' => $e->getMessage()], 403); 
 		}

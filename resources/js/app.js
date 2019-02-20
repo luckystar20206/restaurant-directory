@@ -17,12 +17,6 @@ Vue.use(Toastr, {
     defaultProgressBar: false,
 });
 
-import moment from 'moment';
-Vue.filter('formatDateHuman', function(value) {
-	if(value)
-		return moment(String(value)).format('MMMM YYYY')
-});
-
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

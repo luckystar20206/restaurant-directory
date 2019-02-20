@@ -6,10 +6,7 @@ This project is a sample Laravel 5.7 + Vue web application built on Listing them
 
 This project requires PHP >= 7.2.15.
 
-<pre>
-	<p>composer install</p>
-	<p>npm install</p>
-</pre>
+`composer install\nnpm install`
 
 ### Data
 

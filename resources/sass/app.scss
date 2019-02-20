@@ -1,6 +1,15 @@
 // Bootstrap
 @import "~bootstrap/scss/bootstrap";
 
+// FontAwesome
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+
+// Toastr
+@import "~vue-toastr/src/vue-toastr";
+
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900');
 

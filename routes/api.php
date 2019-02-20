@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::post('restaurants/favorite', 'RestaurantController@favorite');
+
+Route::post('restaurants/unfavorite', 'RestaurantController@unfavorite');
+
 Route::resource('restaurants', 'RestaurantController')->only([
-    'index', 'show'
+    'index'
 ]);

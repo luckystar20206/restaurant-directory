@@ -9,6 +9,20 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+Vue.use(require('vue-cookies'));
+
+import Toastr from 'vue-toastr';
+Vue.use(Toastr, {
+	defaultTimeout: 2000,
+    defaultProgressBar: false,
+});
+
+import moment from 'moment';
+Vue.filter('formatDateHuman', function(value) {
+	if(value)
+		return moment(String(value)).format('MMMM YYYY')
+});
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

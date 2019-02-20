@@ -18,6 +18,10 @@ In this project, you are able to see a restaurant list with detailed information
 
 Also you can search restaurants by their name.
 
+### Demo
+
+[Live Demo](http://165.227.166.12:1999)
+
 ### Installation
 
 This project requires PHP >= 7.2.15.

@@ -20,7 +20,7 @@ You can search restaurants by their name using the search box above restaurant l
 
 ### Demo
 
-[Live Demo](http://165.227.166.12:1999){:target="_blank"}
+[Live Demo](http://165.227.166.12:1999)
 
 ### Installation
 
@@ -42,6 +42,14 @@ Favorited restaurants are kept in cookies.
 
 ### Testing
 
-A unit test is created under `tests\Unit\UnitTest.php`.
+A unit test is created under `tests\Unit\UnitTest.php` which works on PHPUnit. It checks 8 different functionality of the project. With addition of Laravel's default 2 tests, testing result is below:
 
-In order to run this test, run `.\vendor\bin\phpunit` command.
+`PHPUnit 7.5.5 by Sebastian Bergmann and contributors.`
+<br>
+`..........                                                        10 / 10 (100%)`
+<br>
+`Time: 245 ms, Memory: 14.00MB`
+<br>
+`OK (10 tests, 10 assertions)`
+
+In order to run this test, run `.\vendor\bin\phpunit` command in project directory.

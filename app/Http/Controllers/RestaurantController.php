@@ -46,7 +46,7 @@ class RestaurantController extends Controller
     public function index(Request $request)
     {
 		// User favorites are stored in cookie, since no database is used in this project.
-		if(is_null(Cookie::get('favoritedRestaurants')))
+		if(is_null(Cookie::get('favoritedRestaurants')) && env('APP_ENV') != 'testing')
 			setcookie('favoritedRestaurants', '');
 		
         $collection = collect($this->restaurants);
@@ -139,7 +139,8 @@ class RestaurantController extends Controller
 			
 			$favoritedRestaurants[] = $request->restaurant['name'];
 		
-			setcookie('favoritedRestaurants', join(";", $favoritedRestaurants));
+			if(env('APP_ENV') != 'testing')
+				setcookie('favoritedRestaurants', join(";", $favoritedRestaurants));
 			
 			return response()->json(['success' => $request->restaurant['name']." added to your favorites!"], 200);
 		} catch(\Exception $e){
@@ -173,7 +174,8 @@ class RestaurantController extends Controller
 			
 			unset($favoritedRestaurants[$key]);
 		
-			setcookie('favoritedRestaurants', join(";", $favoritedRestaurants));
+			if(env('APP_ENV') != 'testing')
+				setcookie('favoritedRestaurants', join(";", $favoritedRestaurants));
 			
 			return response()->json(['success' => $request->restaurant['name']." removed from your favorites!"], 200);
 		} catch(\Exception $e){
